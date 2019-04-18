@@ -1,0 +1,16 @@
+"""
+Juan Mendoza
+Computer science
+"""
+from gpiozero import LightSensor
+import pygame
+pygame.init()
+pygame.mixer.init()
+
+ldr = LightSensor(4)
+
+dog_bark = pygame.mixer.Sound('/home/pi/Dogs.wav')
+
+ldr.when_dark = lambda: print("intruder")
+ldr.when_dark = dog_bark.play()
+
