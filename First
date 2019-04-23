@@ -5,12 +5,16 @@ Computer science
 from gpiozero import LightSensor
 import pygame
 pygame.init()
-pygame.mixer.init()
 
+#this sets up a variable for the LDR, the number 4 is where the LDR is connected in the Raspberry pi
 ldr = LightSensor(4)
 
-dog_bark = pygame.mixer.Sound('/home/pi/Dogs.wav')
+#this created a sound inside pygame and by doing mixer, I can play and pause it whenever I want
+dog_bark = pygame.mixer.Sound('/home/pi/Music/bark.wav')
+
 
 ldr.when_dark = lambda: print("intruder")
-ldr.when_dark = dog_bark.play()
+
+#this creates a sound when the is intrupted which means that someone passed through the sensor. 
+ldr.when_dark = lambda: dog_bark.play()
 
