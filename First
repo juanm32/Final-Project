@@ -3,16 +3,32 @@ Juan Mendoza
 Computer science
 """
 from gpiozero import LightSensor
+from twilio.rest import Client
 import pygame
 pygame.init()
 
 #this sets up a variable for the LDR, the number 4 is where the LDR is connected in the Raspberry pi
 ldr = LightSensor(4)
 
+#the following lines of code are different options that I can use to aware the user of a intruder
+
+account_sid = 'AC0032ef2e77d9ed0240c4880830fab26f'
+auth_token = 'f0f671ce3a0390cee4fdd48994d9333e'
+client = Client(account_sid, auth_token)
+
+message = client.messages \
+                .create(
+                     body="INTRUDER ALERT",
+                     from_='++16503977748',
+                     to='+16504610217'
+                 )
+
+sms = lambda: print(message.sid)
+
 #this created a sound inside pygame and by doing mixer, I can play and pause it whenever I want
 dog_bark = pygame.mixer.Sound('/home/pi/Music/bark.wav')
 
-
+#if the line is disturbed then it will print intruder
 ldr.when_dark = lambda: print("intruder")
 
 #this creates a sound when the is intrupted which means that someone passed through the sensor. 
